@@ -2,12 +2,15 @@
 
 ## Table of Contents
 
-* [Instructions](#instructions)
+* [Project Description](#instructions)
 
-## Instructions
+## Project Description
+This project converts a static landing page into a dynamic one using JavaScript.
 
-The starter project has some HTML and CSS styling to display a static version of the Landing Page project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+Using the skills acquired from the Professional Web Development Udacity track, a dynamic and responsive navigation bar was built from the existing sections in the HTML page, and styled using CSS.
 
-To get started, open `js/app.js` and start building out the app's functionality
+The navigation bar has clickable elements that scroll to the clicked section. 
 
-For specific, detailed instructions, look at the project instructions in the Udacity Classroom.
+The viewed section has a "your-active-class" class that is updated according to the viewport.
+
+
