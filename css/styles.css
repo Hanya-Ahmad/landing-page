@@ -87,6 +87,7 @@ section {
 
 }
 
+
 .navbar__menu .menu__link {
     display: block;
     padding: 1em;
@@ -219,17 +220,22 @@ section.your-active-class {
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
     box-shadow: 4px 4px 10px #313539;
     border-radius: 5px;
+
     
 }
 
 section.your-active-class .landing__container::before {
     opacity: 1;
     animation: rotate 4s linear 0s infinite forwards;
+    text-decoration: #cc1;
 }
 
 section.your-active-class .landing__container::after {
     opacity: 1;
     animation: rotate 5s linear 0s infinite forwards reverse;
+}
+nav.navbar__menu ul li a.active {
+    background-color: rgba(204, 204, 17, 0.7);
 }
 
 /* Section Active Styles Keyframe Animations */

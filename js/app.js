@@ -29,6 +29,8 @@ const sections = document.querySelectorAll('section');
  * Start Helper Functions
  * 
 */
+
+//Function to check if an element is in viewport
 function isInViewport(element) {
     const rect = element.getBoundingClientRect();
     return (
@@ -49,7 +51,7 @@ function isInViewport(element) {
 // build the nav
 // this function creates an anchor attribute nested in a list attribute in the navigation bar for each section in the HTML page
 //final structure: <li><a href="#name">sectionName</a></li>
-sections.forEach(function buildNavBar(element,index){
+sections.forEach(function buildNavBar(element){
     const navbar = document.getElementById("navbar__list");
     let navItem=document.createElement("li");
     let navLink= document.createElement("a");
@@ -68,30 +70,54 @@ sections.forEach(function buildNavBar(element,index){
 }
 )
 
-// Add class 'active' to section when near top of viewport
-document.addEventListener('scroll', function checkViewPort(){
-    sections.forEach(function (element,index){
-if (isInViewport(element)){
-    element.className="your-active-class";
-}
-//if the section is not in viewport it is essential to remove your-active-class so that it gets updated if it was active in a previous loop
-else element.classList.remove("your-active-class");})
-    
-})
-
-// Scroll to anchor ID using scrollTO event
-
-
 /**
  * End Main Functions
  * Begin Events
  * 
 */
 
-// Build menu 
+// Add class 'your-active-class' to section when near top of viewport
+document.addEventListener('scroll', function checkViewPort(){
+  sections.forEach(function (element){
+if (isInViewport(element)){
+  element.className="your-active-class";
+  
+}
 
-// Scroll to section on link click
+//if the section is not in viewport it is essential to remove your-active-class so that it gets updated if it was active in a previous loop
+else element.classList.remove("your-active-class");})
+  
+})
 
-// Set sections as active
+
+// Scroll to anchor ID using scrollTO event
+const links = document.querySelectorAll(".page__header ul a");
+
+for (const link of links) {
+  link.addEventListener("click", clickHandler);
+}
+function clickHandler(element) {
+  const href = element.getAttribute("href");
+  document.querySelector(href).scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+
+// This event listener listens to scroll event to highlight navbar item when in viewport
+window.addEventListener("scroll", highlight);
+function highlight() {
+  sections.forEach(function(element){
+    let sectionId = element.getAttribute("id");
+    if (
+      isInViewport(element)
+    ){
+      document.querySelector(".navbar__menu a[href*=" + sectionId + "]").classList.add("active");
+    } else {
+      document.querySelector(".navbar__menu a[href*=" + sectionId + "]").classList.remove("active");
+    }
+  });
+}
+
 
 
