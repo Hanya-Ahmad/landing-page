@@ -92,16 +92,16 @@ else element.classList.remove("your-active-class");})
 
 // Scroll to anchor ID using scrollTO event
 const links = document.querySelectorAll(".page__header ul a");
-
 for (const link of links) {
   link.addEventListener("click", clickHandler);
 }
 function clickHandler(element) {
-  const href = element.getAttribute("href");
+  const href = this.getAttribute("href");
   document.querySelector(href).scrollIntoView({
     behavior: "smooth"
   });
 }
+
 
 
 // This event listener listens to scroll event to highlight navbar item when in viewport
@@ -119,5 +119,6 @@ function highlight() {
   });
 }
 
-/*s*
+
+/**
  * End Events*/
