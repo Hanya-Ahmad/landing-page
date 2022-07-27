@@ -229,7 +229,7 @@ section.your-active-class .landing__container::before {
     animation: rotate 4s linear 0s infinite forwards;
     text-decoration: #cc1;
 }
-
+ 
 section.your-active-class .landing__container::after {
     opacity: 1;
     animation: rotate 5s linear 0s infinite forwards reverse;
