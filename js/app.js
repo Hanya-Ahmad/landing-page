@@ -1,56 +1,17 @@
-/**
- * 
- * Manipulating the DOM exercise.
- * Exercise programmatically builds navigation,
- * scrolls to anchors from navigation,
- * and highlights section in viewport upon scrolling.
- * 
- * Dependencies: None
- * 
- * JS Version: ES2015/ES6
- * 
- * JS Standard: ESlint
- * 
-*/
 
-/**
- * Comments should be present at the beginning of each procedure and class.
- * Great to have comments before crucial code sections within the procedure.
-*/
-
-/**
- * Define Global Variables
- * 
-*/
 const sections = document.querySelectorAll('section');
 
-/**
- * End Global Variables
- * Start Helper Functions
- * 
-*/
-
 //Function to check if an element is in viewport
-function isInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-}
 
+function elementInView (el, dividend = 1){
+  const elementTop = el.getBoundingClientRect().top;
+  return (
+    elementTop <=
+    (window.innerHeight || document.documentElement.clientHeight) / dividend
+  );
+};
 
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
-
-// build the nav
-// this function creates an anchor attribute nested in a list attribute in the navigation bar for each section in the HTML page
-//final structure: <li><a href="#name">sectionName</a></li>
+//Function to dynamically build the navigation bar
 sections.forEach(function buildNavBar(element){
     const navbar = document.getElementById("navbar__list");
     let navItem=document.createElement("li");
@@ -70,28 +31,19 @@ sections.forEach(function buildNavBar(element){
 }
 )
 
-/**
- * End Main Functions
- * Begin Events
- * 
-*/
-
 // Add class 'your-active-class' to section when near top of viewport
 document.addEventListener('scroll', function checkViewPort(){
   sections.forEach(function (element){
-if (isInViewport(element)){
+if (elementInView(element,1.25)){
   element.className="your-active-class";
-  
 }
 
 //if the section is not in viewport it is essential to remove your-active-class so that it gets updated if it was active in a previous loop
 else element.classList.remove("your-active-class");})
-  
 })
 
 
-
-// Scroll to anchor ID using scrollTO event
+// Smooth scroll to anchor ID from navbar using scrollTO event
 const links = document.querySelectorAll(".page__header ul a");
 
 for (const link of links) {
@@ -105,23 +57,45 @@ function clickHandler(element) {
     behavior: "smooth"
   });
 }
+// Smooth scroll to anchor ID from footer using scrollTO event
 
+const footerLinks = document.querySelectorAll(".footer .row ul li a");
 
-// This event listener listens to scroll event to highlight navbar item when in viewport
-window.addEventListener("scroll", highlight);
-function highlight() {
-  sections.forEach(function(element){
-    let sectionId = element.getAttribute("id");
-    if (
-      isInViewport(element)
-    ){
-      document.querySelector(".navbar__menu a[href*=" + sectionId + "]").classList.add("active");
-    } else {
-      document.querySelector(".navbar__menu a[href*=" + sectionId + "]").classList.remove("active");
-    }
+for (const link of footerLinks) {
+  link.addEventListener("click", clickHandler);
+}
+function clickHandler(element) {
+  element.preventDefault();
+  const href = this.getAttribute("href");
+
+  document.querySelector(href).scrollIntoView({
+    behavior: "smooth"
   });
 }
 
+//Add scrolled class to the elements in view port to apply sliding animation to them
+const scrollElements = document.querySelectorAll(".landing__container");
 
-/**
- * End Events*/
+
+
+const displayScrollElement = (element) => {
+  element.classList.add("scrolled");
+};
+
+const hideScrollElement = (element) => {
+  element.classList.remove("scrolled");
+};
+
+const handleScrollAnimation = () => {
+  scrollElements.forEach((el) => {
+    if (elementInView(el,1.25)) {
+      displayScrollElement(el);
+    } else {
+      hideScrollElement(el)
+    }
+  })
+}
+
+window.addEventListener("scroll", () => { 
+  handleScrollAnimation();
+});
